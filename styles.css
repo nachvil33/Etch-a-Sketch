@@ -1,16 +1,16 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    transition: background-color 7s linear;
 }
 
 #container {
     display: grid;
-    grid-template-columns: repeat(16, 1fr);
-    grid-template-rows: repeat(16, 1fr);
     gap: 2px;
     margin: 20px auto;
-    width: 480px;
-    height: 480px;
+    max-width: 80%;
+    aspect-ratio: 1 / 1;
+    max-height: 80vh;
 }
 
 .square {
@@ -19,9 +19,49 @@ body {
     transition: background-color 0.2s;
 }
 
-#reset-button {
+#container-options {
     margin-top: 10px;
+}
+
+#grid-size {
+    width: 100%;
+}
+
+#grid-size-value {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+button {
+    margin: 10px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+}
+
+#color-palette {
+    display: none;
+    grid-template-columns: repeat(4, 1fr); /* Mostrar colores en una cuadrícula de 4 columnas */
+    gap: 5px;
+    width: 200px;
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.color {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
