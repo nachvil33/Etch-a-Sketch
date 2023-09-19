@@ -16,7 +16,7 @@ let isPaletteVisible = false;
 // Ocultar la paleta de colores al inicio
 toggleColorPalette(false);
 
-// Agrega un event listener al documento para cerrar la paleta al hacer clic en cualquier lugar fuera de ella
+// Agregar un event listener al documento para cerrar la paleta al hacer clic en cualquier lugar fuera de ella
 document.addEventListener('click', (event) => {
     if (!colorPalette.contains(event.target) && event.target !== colorPaletteButton) {
         toggleColorPalette(false);
@@ -79,6 +79,10 @@ randomPaintModeButton.addEventListener('click', () => {
 lockColorButton.addEventListener('click', () => {
     isLocked = !isLocked;
     lockColorButton.textContent = isLocked ? 'Unlock Background Color' : 'Lock Background Color';
+    // Ocultar la paleta de colores cuando se bloquea el color de fondo
+    if (isLocked) {
+        toggleColorPalette(false);
+    }
 });
 
 colorPaletteButton.addEventListener('click', (event) => {
@@ -97,7 +101,7 @@ colors.forEach((color) => {
 
 function toggleColorPalette(show) {
     if (show) {
-        colorPalette.style.display = 'grid'; // Cambiado a 'grid'
+        colorPalette.style.display = 'grid';
     } else {
         colorPalette.style.display = 'none';
     }
@@ -105,19 +109,21 @@ function toggleColorPalette(show) {
 
 function colorSquare(square) {
     if (isPainting) {
-        const randomColor = generateRandomColor();
-        square.style.backgroundColor = randomColor;
-        square.style.transition = 'none';
+        if (currentColor === 'black') {
+            const randomColor = generateRandomColor();
+            square.style.backgroundColor = randomColor;
+            square.style.transition = 'none';
 
-        let darkness = parseInt(square.dataset.darkness) || 0;
-        if (darkness < 10) {
-            darkness += 1;
-            square.dataset.darkness = darkness;
-            square.style.filter = `brightness(${100 - darkness * 10}%)`;
+            let darkness = parseInt(square.dataset.darkness) || 0;
+            if (darkness < 10) {
+                darkness += 1;
+                square.dataset.darkness = darkness;
+                square.style.filter = `brightness(${100 - darkness * 10}%)`;
+            }
+        } else {
+            square.style.backgroundColor = currentColor;
+            square.style.transition = 'none';
         }
-    } else {
-        square.style.backgroundColor = currentColor;
-        square.style.transition = 'none';
     }
 }
 
